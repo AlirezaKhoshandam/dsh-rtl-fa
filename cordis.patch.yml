@@ -1,0 +1,8 @@
+# dsh-rtl-fa bundle patch.
+#
+# The host half owns the durable, volatile Config schema that the Web client
+# edits through Settings -> General. The client half is declared in
+# package.json under dsh.client and is attached to this same Loader row.
+- insert:
+    - id: ui-rtl-fa
+      name: dsh-rtl-fa

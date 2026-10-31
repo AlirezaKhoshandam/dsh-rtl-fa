@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>dsh-rtl-fa visual fixture</title>
+  <link rel="stylesheet" href="visual-fixture.css">
+</head>
+<body>
+  <div class="page">
+    <h1 class="pageTitle">dsh-rtl-fa — Persian / RTL visual verification</h1>
+    <p class="pageHint">A DSH-shaped transcript. English chrome and code stay LTR; Persian blocks are detected independently.</p>
+
+    <main class="transcript" data-chat-flow data-conversation-scroll>
+      <div class="userRow" data-chat-node-key="user-1">
+        <div class="bubble" id="userBubble">برای اجرای دستور npm install ابتدا وارد پوشه پروژه شوید.</div>
+      </div>
+
+      <div class="assistant" data-chat-node-key="assistant-1">
+        <div class="assistantLabel">Assistant</div>
+        <div class="markdown" id="assistantPersian">
+          <h2>راهنمای نصب و راه‌اندازی</h2>
+          <p id="mixedParagraph">برای اجرای دستور <code>npm install</code> ابتدا وارد پوشه پروژه شوید. مستندات کامل در <a href="https://example.com/install">https://example.com/install</a> قرار دارد.</p>
+          <p>این پاراگراف کاملاً فارسی است و باید از سمت راست شروع شود. اعداد مانند ۱۲۳ و علائم نگارشی، از جمله ویرگول، باید در جای درست خود باقی بمانند.</p>
+
+          <h3>فهرست مراحل</h3>
+          <ol id="allRtlList">
+            <li>پوشه پروژه را باز کنید.</li>
+            <li>وابستگی‌ها را نصب کنید.</li>
+            <li>برنامه را اجرا کنید.</li>
+          </ol>
+
+          <blockquote id="quoteBlock">
+            <p>نقل‌قول فارسی باید با حاشیهٔ سمت راست نمایش داده شود، نه سمت چپ.</p>
+          </blockquote>
+
+          <h3>جدول وضعیت</h3>
+          <div class="tableScroll">
+            <table id="persianTable">
+              <thead>
+                <tr><th>مرحله</th><th>وضعیت</th><th>توضیح</th></tr>
+              </thead>
+              <tbody>
+                <tr><td id="tableFa">نصب</td><td>انجام شد</td><td>بدون خطا</td></tr>
+                <tr><td id="tableEn">Build</td><td>Passed</td><td>English cell stays LTR</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>نمونهٔ کد</h3>
+          <pre id="codeBlock"><code>npm install
+npm run build</code></pre>
+          <p>پس از اجرای کد بالا، برنامه در نشانی <code>http://127.0.0.1:49874</code> در دسترس است.</p>
+        </div>
+      </div>
+
+      <div class="assistant" data-chat-node-key="assistant-2">
+        <div class="assistantLabel">Assistant — English</div>
+        <div class="markdown" id="assistantEnglish">
+          <h2>Installation notes</h2>
+          <p>This entire answer is English. It must stay left-aligned, and the code block must stay LTR.</p>
+          <ul>
+            <li>Run <code>npm install</code>.</li>
+            <li>Open <a href="https://example.com">https://example.com</a>.</li>
+          </ul>
+          <pre><code>const direction = 'ltr'</code></pre>
+        </div>
+      </div>
+
+      <div class="streamRow" data-chat-node-key="stream-1">
+        <div class="markdown"><p id="streamTarget">Streaming starts with an English chunk.</p></div>
+      </div>
+    </main>
+  </div>
+
+  <div class="composerSeat" data-composer-seat>
+    <div class="composer" id="composer" data-composer-input contenteditable="true" role="textbox" aria-label="Message composer">
+      <p>برای نصب ابتدا دستور npm install را اجرا کنید.</p>
+    </div>
+  </div>
+
+  <script src="visual-bootstrap.js"></script>
+  <script src="../lib/client.js"></script>
+  <script src="visual-runner.js"></script>
+</body>
+</html>

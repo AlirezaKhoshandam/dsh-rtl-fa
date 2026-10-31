@@ -1,0 +1,273 @@
+/*
+ * Visual test fixture. The markdown geometry below is a compact copy of the
+ * real DSH MarkdownText.module.css rules and --dsw-* token values in use by
+ * DeepSeek Harness 0.2.1-rc.5, so the plugin's cascade is exercised against
+ * the same physical properties (padding, border, marker, table cells).
+ */
+:root {
+  color-scheme: light;
+  --dsw-alias-label-primary: #1a1a1c;
+  --dsw-alias-label-secondary: #55555c;
+  --dsw-alias-label-tertiary: #8a8a92;
+  --dsw-alias-label-caption: #b3b3ba;
+  --dsw-alias-border-l1: #00000014;
+  --dsw-alias-border-l2: #0000001f;
+  --dsw-alias-border-l3: #00000033;
+  --dsw-alias-border-l4: #0000005c;
+  --dsw-alias-bg-base: #ffffff;
+  --dsw-alias-bg-layer-2: #ffffff;
+  --dsw-alias-bg-module-platform: #f7f7f8;
+  --dsw-alias-markdown-inline-code: #f2f2f4;
+  --dsw-alias-markdown-code-block: #f7f7f8;
+  --dsw-alias-state-business-primary: #4176e6;
+  --dsw-alias-state-error-primary: #d33b3b;
+  --dsw-specific-bubble: #f2f3f5;
+  --dsw-radius-sm: 8px;
+  --dsw-radius-xl: 20px;
+  --dsh-content-font-size: 14px;
+  --dsh-content-font-size-secondary: 13px;
+  --dsw-font-markdown-base: 400 14px/22px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --dsw-font-markdown-h1: 600 24px/32px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --dsw-font-markdown-h2: 600 20px/28px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --dsw-font-markdown-h3: 600 16px/24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --dsw-font-markdown-base-strong: 600 14px/22px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --dsw-font-markdown-code: 400 13px/20px ui-monospace, monospace;
+  --dsw-font-markdown-code-block: 400 12px/20px ui-monospace, monospace;
+  --dsw-font-markdown-table: 400 13px/20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --dsw-font-markdown-table-head: 600 13px/20px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ds-font-family-code: ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 36px 24px 120px;
+  background: #fbfbfc;
+  color: var(--dsw-alias-label-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.page {
+  width: min(860px, 100%);
+  margin: 0 auto;
+}
+
+.pageTitle {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.pageHint {
+  margin: 0 0 28px;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 12px;
+}
+
+.transcript {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  min-width: 0;
+}
+
+.userRow {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bubble {
+  max-width: 82%;
+  padding: 10px 16px;
+  border-radius: var(--dsw-radius-xl);
+  background: var(--dsw-specific-bubble);
+  color: var(--dsw-alias-label-primary);
+  font-size: var(--dsh-content-font-size);
+  line-height: 22px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.assistant {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 18px 20px;
+  border: 0.5px solid var(--dsw-alias-border-l1);
+  border-radius: 18px;
+  background: var(--dsw-alias-bg-base);
+}
+
+.assistantLabel {
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.markdown {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  font: var(--dsw-font-markdown-base);
+  color: var(--dsw-alias-label-primary);
+}
+
+.markdown h1 {
+  font: var(--dsw-font-markdown-h1);
+  margin: 22px 0 12px;
+}
+
+.markdown h2 {
+  font: var(--dsw-font-markdown-h2);
+  margin: 22px 0 12px;
+}
+
+.markdown h3 {
+  font: var(--dsw-font-markdown-h3);
+  margin: 18px 0 10px;
+}
+
+.markdown p {
+  margin: 12px 0;
+}
+
+.markdown ul,
+.markdown ol {
+  margin: 12px 0;
+  padding-left: 18px;
+}
+
+.markdown li:not(:first-child) {
+  margin-top: 6px;
+}
+
+.markdown li::marker {
+  line-height: 24px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.markdown blockquote {
+  margin: 14px 0 0;
+  padding-left: 14px;
+  border-left: 2px solid var(--dsw-alias-label-caption);
+}
+
+.markdown pre {
+  margin: 14px 0;
+  padding: 14px 18px;
+  overflow: auto;
+  border-radius: 12px;
+  background: var(--dsw-alias-markdown-code-block);
+  font-family: var(--ds-font-family-code);
+  font-size: 12px;
+  line-height: 20px;
+  direction: ltr;
+  text-align: left;
+}
+
+.markdown :not(pre) > code {
+  padding: 0 5px;
+  border: 0.5px solid var(--dsw-alias-border-l1);
+  border-radius: var(--dsw-radius-sm);
+  background: var(--dsw-alias-markdown-inline-code);
+  font-family: var(--ds-font-family-code);
+  font-size: 0.9em;
+}
+
+.markdown a {
+  color: var(--dsw-alias-state-business-primary);
+  text-decoration: none;
+}
+
+.tableScroll {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin: 14px 0;
+  overflow-x: auto;
+}
+
+.markdown table {
+  border-collapse: collapse;
+  width: max-content;
+  max-width: max-content;
+}
+
+.markdown th {
+  padding: 10px 16px;
+  border-top: 0;
+  border-bottom: 1px solid var(--dsw-alias-border-l3);
+  font: var(--dsw-font-markdown-table-head);
+  text-align: start;
+  min-width: 100px;
+}
+
+.markdown td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--dsw-alias-border-l2);
+  font: var(--dsw-font-markdown-table);
+  text-align: start;
+  min-width: 100px;
+}
+
+.markdown th:first-child,
+.markdown td:first-child {
+  padding-left: 0;
+}
+
+.markdown td:last-child {
+  padding-right: 0;
+}
+
+.markdown hr {
+  height: 1px;
+  margin: 24px 0;
+  border: 0;
+  background: var(--dsw-alias-border-l2);
+}
+
+.composerSeat {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  background: linear-gradient(transparent, #fbfbfc 28%);
+}
+
+.composer {
+  width: min(820px, 100%);
+  min-height: 70px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  border: 0.5px solid var(--dsw-alias-border-l3);
+  border-radius: 18px;
+  background: #fff;
+  color: var(--dsw-alias-label-primary);
+  font-size: 14px;
+  line-height: 22px;
+  box-shadow: 0 6px 24px #0000000f;
+  outline: none;
+  white-space: pre-wrap;
+}
+
+.sectionLabel {
+  margin: 30px 0 8px;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.streamRow {
+  padding: 12px 14px;
+  border: 0.5px dashed var(--dsw-alias-border-l3);
+  border-radius: 12px;
+  background: #fff;
+}

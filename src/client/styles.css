@@ -1,0 +1,305 @@
+/*
+ * dsh-rtl-fa: direction rules for detected content blocks.
+ *
+ * The plugin never sets `direction` on the document, the conversation
+ * container, or a message wrapper. It marks individual text blocks so English
+ * paragraphs, layout order, code, URLs and other UI chrome keep their original
+ * behavior.
+ *
+ * Every selector is scoped to an attribute added by the engine. This makes
+ * unload symmetrical: removing the engine's attributes restores the exact
+ * pre-plugin layout without needing to reverse any broad CSS.
+ */
+
+[data-dsh-rtl='rtl'],
+[data-dsh-rtl='ltr'] {
+  text-align: start;
+  unicode-bidi: isolate;
+}
+
+[data-dsh-rtl='rtl'] {
+  direction: rtl;
+}
+
+[data-dsh-rtl='ltr'] {
+  direction: ltr;
+}
+
+/*
+ * Code is always LTR, including inline code that sits inside a Persian
+ * paragraph. Isolation keeps neutral punctuation around a code span from
+ * reordering the surrounding Persian sentence.
+ */
+[data-dsh-rtl='rtl'] :where(code, kbd, samp),
+[data-dsh-rtl='ltr'] :where(code, kbd, samp) {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+}
+
+[data-dsh-rtl='rtl'] :where(pre),
+[data-dsh-rtl='ltr'] :where(pre) {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+}
+
+/*
+ * A URL, e-mail address or reference fragment is a self-contained LTR run.
+ * Isolation prevents its slashes/query punctuation from being pulled into the
+ * surrounding RTL run while preserving the natural visual order inside it.
+ */
+[data-dsh-rtl='rtl'] :where(a),
+[data-dsh-rtl='ltr'] :where(a) {
+  unicode-bidi: isolate;
+}
+
+/* KaTeX formulas are LTR runs even inside a Persian paragraph. */
+[data-dsh-rtl='rtl'] :where(.katex, .katex-display),
+[data-dsh-rtl='ltr'] :where(.katex, .katex-display) {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* Markdown task-list checkboxes follow the text side in RTL blocks. */
+[data-dsh-rtl='rtl'] input[type='checkbox'] {
+  margin-inline-start: 0;
+  margin-inline-end: 8px;
+}
+
+/*
+ * Blockquotes are marked without a direction attribute: the engine sets
+ * data-dsh-rtl-quote so the border moves to the inline-start side, while each
+ * paragraph keeps its own independently detected direction. This avoids an
+ * English paragraph inheriting RTL merely because a sibling paragraph is
+ * Persian.
+ */
+blockquote[data-dsh-rtl-quote='rtl'] {
+  border-left: 0;
+  border-right: 2px solid var(--dsw-alias-label-caption, currentColor);
+  padding-left: 0;
+  padding-right: 14px;
+}
+
+/*
+ * An all-RTL list receives a real direction so its bullets/numbers move to the
+ * right. A mixed list keeps its original direction and only moves the padding
+ * to accommodate the wider gutter; each item's own text block is marked
+ * independently.
+ */
+ul[data-dsh-rtl-list='rtl'],
+ol[data-dsh-rtl-list='rtl'] {
+  direction: rtl;
+  padding-left: 0;
+  padding-right: 18px;
+}
+
+ul[data-dsh-rtl-list='ltr'],
+ol[data-dsh-rtl-list='ltr'] {
+  direction: ltr;
+}
+
+:where(ul, ol):has(> li[data-dsh-rtl-item='rtl']):not([data-dsh-rtl-list='rtl']) {
+  padding-left: 18px;
+  padding-right: 18px;
+}
+
+/*
+ * A predominantly RTL table reverses its column order. The first DOM cell is
+ * then painted at the right edge, so its edge padding moves with the layout;
+ * logical padding keeps the original 16px gutter on the inner side.
+ */
+[data-dsh-rtl-table='rtl'] {
+  direction: rtl;
+}
+
+[data-dsh-rtl-table='rtl'] :is(th, td):first-child:not(:last-child) {
+  padding-left: 16px;
+  padding-right: 0;
+}
+
+[data-dsh-rtl-table='rtl'] :is(th, td):last-child:not(:first-child) {
+  padding-left: 0;
+  padding-right: 16px;
+}
+
+/* Keep list-item spacing while the native marker follows the item direction. */
+[data-dsh-rtl-list='rtl'] > li::marker {
+  color: var(--dsw-alias-label-secondary, currentColor);
+}
+
+/*
+ * The composer is a block-level contenteditable. `plaintext` is intentionally
+ * not used: the detected paragraph direction must win over a leading English
+ * token such as a command name.
+ */
+[data-composer-input][data-dsh-rtl='rtl'] {
+  direction: rtl;
+  text-align: right;
+  unicode-bidi: isolate;
+}
+
+[data-composer-input][data-dsh-rtl='rtl'] :where(pre, code) {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+}
+
+/* Settings row: uses only DSH semantic tokens, with safe fallbacks. */
+.dshRtlFa_group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 0;
+  border-bottom: 0.5px solid var(--dsw-alias-border-l2, #0000001f);
+}
+
+.dshRtlFa_heading {
+  color: var(--dsw-alias-label-primary, #111);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.dshRtlFa_description {
+  color: var(--dsw-alias-label-tertiary, #666);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.dshRtlFa_rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dshRtlFa_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 34px;
+}
+
+.dshRtlFa_rowText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.dshRtlFa_label {
+  color: var(--dsw-alias-label-primary, #111);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.dshRtlFa_hint {
+  color: var(--dsw-alias-label-tertiary, #666);
+  font-size: 11px;
+  line-height: 17px;
+}
+
+.dshRtlFa_switch {
+  position: relative;
+  flex: none;
+  width: 34px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--dsw-alias-border-l4, #c7c7cc);
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+
+.dshRtlFa_switch[aria-checked='true'] {
+  background: var(--dsw-alias-state-business-primary, #4176e6);
+}
+
+.dshRtlFa_switch:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.dshRtlFa_switch:focus-visible,
+.dshRtlFa_select:focus-visible {
+  outline: 2px solid var(--dsw-focus-ring-color, var(--dsw-alias-state-business-primary, #4176e6));
+  outline-offset: 2px;
+}
+
+.dshRtlFa_thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--dsw-alias-switch-thumb, #fff);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 18%);
+  transition: transform 0.12s ease;
+}
+
+.dshRtlFa_switch[aria-checked='true'] .dshRtlFa_thumb {
+  transform: translateX(14px);
+}
+
+.dshRtlFa_select {
+  flex: none;
+  max-width: 205px;
+  padding: 5px 8px;
+  border: 0.5px solid var(--dsw-alias-border-l3, #00000033);
+  border-radius: 8px;
+  background: var(--dsw-alias-bg-layer-2, #fff);
+  color: var(--dsw-alias-label-primary, #111);
+  font: inherit;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.dshRtlFa_select:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.dshRtlFa_sample {
+  margin-top: 2px;
+  padding: 9px 12px;
+  border: 0.5px solid var(--dsw-alias-border-l1, #00000014);
+  border-radius: 10px;
+  background: var(--dsw-alias-bg-module-platform, #f7f7f8);
+  color: var(--dsw-alias-label-secondary, #444);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.dshRtlFa_sampleCode {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-family: var(--ds-font-family-code, ui-monospace, monospace);
+  font-size: 0.94em;
+}
+
+.dshRtlFa_sampleUrl {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.dshRtlFa_error {
+  color: var(--dsw-alias-state-error-primary, #d33);
+  font-size: 11px;
+  line-height: 17px;
+}
+
+.dshRtlFa_status {
+  color: var(--dsw-alias-label-tertiary, #666);
+  font-size: 11px;
+  line-height: 17px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dshRtlFa_switch,
+  .dshRtlFa_thumb {
+    transition: none !important;
+  }
+}

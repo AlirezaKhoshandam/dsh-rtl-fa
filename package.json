@@ -1,0 +1,64 @@
+{
+  "name": "dsh-rtl-fa",
+  "version": "1.0.0",
+  "description": "Intelligent Persian, Arabic and RTL text layout for the DeepSeek Harness Web GUI.",
+  "license": "MIT",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "README.fa.md",
+    "CHANGELOG.md",
+    "docs",
+    "LICENSE"
+  ],
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@deepseek-ai/schemastery": "~3.18.5"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "jsdom": "^27.0.0",
+    "playwright-core": "^1.50.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node tests/run-tests.mjs",
+    "test:node": "node --test tests/*.test.js",
+    "test:visual": "node tests/visual.mjs",
+    "check": "npm run build && npm test",
+    "clean": "node -e \"require('node:fs').rmSync('lib',{recursive:true,force:true})\""
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "rtl",
+    "persian",
+    "farsi",
+    "arabic",
+    "bidi"
+  ]
+}
